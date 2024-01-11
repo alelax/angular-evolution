@@ -7,6 +7,11 @@ type Alert = {
   type: 'primary' | 'success' | 'danger'
 }
 
+type Coords = {
+  x: number
+  y: number
+}
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -34,6 +39,26 @@ type Alert = {
       </div>  
       
       <input type="text">
+      
+      <button
+        class="btn"
+        (mousemove)="show($event)"
+        (mouseout)="hide()"
+      >
+        OVER
+      </button>
+      
+      <div>{{ position?.x }} - {{ position?.y }}</div>
+
+      <div
+        class="absolute bg-black text-white p-3 rounded-xl pointer-events-none"
+        [style.left.px]="position?.x"
+        [style.top.px]="position?.y"
+        [hidden]="!position"
+      >
+        TOOLTIP
+      </div>
+      
     </div>
     
     
@@ -44,10 +69,23 @@ type Alert = {
   `],
 })
 export class AppComponent {
-  title = 'angular-demo';
+
+  position: Coords | null = null;
 
   alert: Alert = {
     msg: 'hello',
     type: 'primary'
+  }
+
+  show(event: MouseEvent) {
+    this.position = {
+      x: event.clientX + 10,
+      y: event.clientY + 10
+    }
+
+  }
+
+  hide() {
+    this.position = null
   }
 }

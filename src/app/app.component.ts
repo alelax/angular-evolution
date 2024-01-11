@@ -19,8 +19,8 @@ type Alert = {
       <div
         class="alert"
         [ngClass]="{
-        'alert-primary': alert.type === 'primary',
-        'alert-danger': alert.type === 'danger',
+        'alert-info': alert.type === 'primary',
+        'alert-error': alert.type === 'danger',
         'alert-success': alert.type === 'success',
       }"
       >
@@ -32,6 +32,8 @@ type Alert = {
         <button class="btn" (click)="alert = { msg: 'hello 2', type: 'danger' }">danger</button>
         <button class="btn" (click)="alert = { msg: 'hello 3', type: 'success' }">success</button>
       </div>  
+      
+      <input type="text">
     </div>
     
     

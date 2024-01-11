@@ -14,26 +14,6 @@
   @apply text-3xl my-6
 }
 
-.btn {
-  @apply bg-sky-600 px-3 py-1 rounded-xl text-white
-}
-
-.alert {
-  @apply border-4 border-black rounded-xl p-5
-}
-
-.alert-primary {
-  @apply bg-sky-600 text-white
-}
-
-.alert-danger {
-  @apply bg-red-600 text-white
-}
-
-.alert-success {
-  @apply bg-green-200 text-black
-}
-
 input {
-  @apply border border-black rounded-xl
+  @apply input input-bordered w-full max-w-xs
 }

@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
@@ -34,15 +34,12 @@ type Coords = {
     
   `],
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
 
   @ViewChild('input') myInput: ElementRef<HTMLInputElement> | undefined;
 
-  constructor() {
-    setTimeout(() => {
-      console.log('on constructor: ', this.myInput?.nativeElement.value);
-      this.myInput?.nativeElement.focus();
-    }, 2000)
+  ngAfterViewInit(): void {
+    this.myInput?.nativeElement.focus();
   }
 
   keydownHandler() {
@@ -58,4 +55,5 @@ export class AppComponent {
   read(input: HTMLInputElement) {
     console.log(this.myInput?.nativeElement.value)
   }
+
 }

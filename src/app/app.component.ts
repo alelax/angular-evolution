@@ -19,6 +19,7 @@ type Coords = {
   template: `
     <div class="centred-page sm flex flex-col gap-3">
       
+      <!--START::Alert-example-->
       <h1 class="page-title">Alert example</h1>
       
       <div
@@ -36,10 +37,12 @@ type Coords = {
         <button class="btn" (click)="alert = { msg: 'hello 1', type: 'primary' }">primary</button>
         <button class="btn" (click)="alert = { msg: 'hello 2', type: 'danger' }">danger</button>
         <button class="btn" (click)="alert = { msg: 'hello 3', type: 'success' }">success</button>
-      </div>  
+      </div>
       
       <input type="text">
-      
+      <!--END::Alert-example-->
+
+      <!--START::Tooltop-example-->
       <button
         class="btn"
         (mousemove)="show($event)"
@@ -58,6 +61,19 @@ type Coords = {
       >
         TOOLTIP
       </div>
+      <!--END::Tooltop-example-->
+
+      <!--START::keyevent-example-->
+      <label>Keydown handler</label>
+      <input type="text" (keydown)="keydownHandler($event)">
+      <label>Keydown Enter Key handler</label>
+      <input type="text" (keydown.enter)="keydownEnterHandler($event)">
+      <!--END::keyevent-example-->
+
+      <!--START::Template-reference-variable-example-->
+      <label>Template Reference Variable</label>
+      <input type="text" (keydown.enter)="readInputValue(inputTempRefVar)" #inputTempRefVar >
+      <!--END::Template-reference-variable-example-->
       
     </div>
     
@@ -87,5 +103,35 @@ export class AppComponent {
 
   hide() {
     this.position = null
+  }
+
+
+  keydownHandler(event: KeyboardEvent) {
+
+    const text = (event.currentTarget as HTMLInputElement).value;
+    const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+    const isUrlValid = urlRegex.test(text);
+
+    if (event.key === 'Enter' && isUrlValid) {
+      window.open(text);
+    }
+
+  }
+
+
+  keydownEnterHandler(event: Event) {
+    const text = (event.target as HTMLInputElement).value;
+    const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+    const isUrlValid = urlRegex.test(text)
+
+    if (isUrlValid) window.open(text);
+  }
+
+  readInputValue(inputTempRefVar: HTMLInputElement) {
+    const text = inputTempRefVar.value;
+    const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+    const isUrlValid = urlRegex.test(text)
+
+    if (isUrlValid) window.open(text);
   }
 }

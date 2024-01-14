@@ -19,13 +19,11 @@ type Coords = {
   template: `
     <div class="centred-page sm flex flex-col gap-3">
       
-
-      <!--START::Template-reference-variable-example-->
+      
       <label>ViewChild and Template Reference Variable</label>
       <input type="text" (keydown.enter)="keydownHandler()" #input>
       
       <button (click)="read(input)">READ VALUE</button>
-      <!--END::Template-reference-variable-example-->
       
     </div>
     

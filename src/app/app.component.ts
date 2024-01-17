@@ -53,24 +53,37 @@ export class AppComponent {
   ]
 
   addTodo(todoInput: HTMLInputElement) {
+
+    // verifica se input è vuoto
+    if (!todoInput.value) return;
+
     const newTodo: Todo = {
       id: Date.now(),
       title: todoInput.value,
       completed: false
     }
 
-    this.todos.push(newTodo);
+    //this.todos.push(newTodo);
+    this.todos = [...this.todos, newTodo]
+
     todoInput.value = '';
   }
 
   removeTodo(id: number) {
-    const index = this.todos.findIndex( t => t.id === id);
-    this.todos.splice(index, 1);
+    /*const index = this.todos.findIndex( t => t.id === id);
+    this.todos.splice(index, 1);*/
+
+    this.todos = this.todos.filter( todo => todo.id !== id );
+
   }
 
   toggleTodo(id: number) {
-    const index = this.todos.findIndex( t => t.id === id);
-    this.todos[index].completed = !this.todos[index].completed
+    /*const index = this.todos.findIndex( t => t.id === id);
+    this.todos[index].completed = !this.todos[index].completed*/
+
+    this.todos = this.todos.map( todo => {
+      return todo.id === id ? {...todo, completed: !todo.completed } : todo
+    })
   }
 
   saveAll() {

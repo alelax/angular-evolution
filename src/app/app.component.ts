@@ -1,92 +1,66 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, signal, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
-type Todo = {
-  id: number
-  title: string
-  completed: boolean
-}
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, RouterOutlet],
   template: `
-    <div class="centred-page flex flex-col gap-4 items-center">
+    <div class="centred-page sm">
+      <h1 class="page-title">Counter Demo with Signal</h1>
       
-      <input
-        #todoInput
-        type="text"
-        class="input input-bordered"
-        placeholder="Add new todo"
-        (keydown.enter)="addTodo(todoInput)"
-      >
+      <button class="btn" (click)="dec()">-</button>
+      <span class="text-2xl">{{ counter() }}</span>
+      <button class="btn" (click)="inc()">+</button>
+      <button class="btn" (click)="reset()">reset</button>
       
-      <div 
-        *ngFor="let todo of todos"
-        [ngClass]="{ 'line-through': todo.completed }"
-      >
-        <input
-          type="checkbox"
-          class="checkbox"
-          [checked]="todo.completed"
-          (change)="toggleTodo(todo.id)"
-        >
-        {{ todo.title }}
-        <button class="btn" (click)="removeTodo(todo.id)">remove</button>
-      </div>
-
-      <button class="btn" (click)="saveAll()">Save</button>
     </div>    
   `,
-  styles: [`
-    
-  `],
+  styles: [``],
 })
 export class AppComponent {
 
-  todos: Todo[] = [
-    { id: 1, title: 'Todo 1', completed: false },
-    { id: 2, title: 'Todo 2', completed: true },
-    { id: 3, title: 'Todo 3', completed: false },
-  ]
+  /*
+  * START::Classic-way
+  * */
+  counter_old = 0
 
-  addTodo(todoInput: HTMLInputElement) {
-
-    // verifica se input è vuoto
-    if (!todoInput.value) return;
-
-    const newTodo: Todo = {
-      id: Date.now(),
-      title: todoInput.value,
-      completed: false
-    }
-
-    //this.todos.push(newTodo);
-    this.todos = [...this.todos, newTodo]
-
-    todoInput.value = '';
+  dec_old() {
+    this.counter_old--;
   }
 
-  removeTodo(id: number) {
-    /*const index = this.todos.findIndex( t => t.id === id);
-    this.todos.splice(index, 1);*/
-
-    this.todos = this.todos.filter( todo => todo.id !== id );
-
+  inc_old() {
+    this.counter_old++
   }
 
-  toggleTodo(id: number) {
-    /*const index = this.todos.findIndex( t => t.id === id);
-    this.todos[index].completed = !this.todos[index].completed*/
+  reset_old() {
+    this.counter_old = 0
+  }
+  /*
+  * END::Classic-way
+  * */
 
-    this.todos = this.todos.map( todo => {
-      return todo.id === id ? {...todo, completed: !todo.completed } : todo
-    })
+
+  /*
+  * START::Signal-way
+  * */
+  counter = signal<number>(0);
+
+  dec() {
+    this.counter.update(counter => counter - 1);
   }
 
-  saveAll() {
-    console.log('TODOS: ', this.todos);
+  inc() {
+    this.counter.update(counter => counter + 1);
   }
+
+  reset() {
+    this.counter.set(0);
+  }
+  /*
+  * END::Signal-way
+  * */
+
 }

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, effect, ElementRef, signal, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
@@ -47,6 +47,14 @@ export class AppComponent {
   * START::Signal-way
   * */
   counter = signal<number>(0);
+
+  constructor() {
+    /*
+    * Per far si che la funzione venga eseguita ogni volta che il signal cambia, è necessario
+    * solamente utilizzare il signal al suo interno.
+    * */
+    effect(() => localStorage.setItem('counter', JSON.stringify(this.counter())));
+  }
 
   dec() {
     this.counter.update(counter => counter - 1);

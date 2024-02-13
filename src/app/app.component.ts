@@ -19,7 +19,7 @@ import { RouterOutlet } from '@angular/router';
       <button class="btn" (click)="inc()">+</button>
       <button class="btn" (click)="reset()" [style.display]="hideIfZero()">reset</button>
       
-      <!-- PROVA GITHUB -->
+      <!-- PROVA GITHUB 2 -->
 
       <div [hidden]="!isZero()">Counter is zero!</div>
       <!--<div [hidden]="!isZero_old()">Counter is zero OLD!</div>-->

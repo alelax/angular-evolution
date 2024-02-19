@@ -60,9 +60,9 @@ const initialState: Product[] = [
       } @empty {
         <button class="btn" (click)="loadProducts()">Load</button>
       }
+
+      <div *ngIf="hasProducts()">Ci sono {{ totalProducts() }} prodotti</div>
     </div>
-
-
   `,
   styles: [``],
 })
@@ -74,6 +74,9 @@ export class AppComponent {
 
   products = signal<Product[]>([]);
   
+  hasProducts = computed(() => this.products().length > 0);
+
+  totalProducts = computed(() => this.products().length);
 
   singIn() {
     this.logged.set(true);

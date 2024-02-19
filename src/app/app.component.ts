@@ -8,6 +8,7 @@ import { RouterOutlet } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterOutlet],
   template: `
+    <!-- @if @else -->
     <div class="centred-page sm">
       
       @if (logged()) {
@@ -19,12 +20,36 @@ import { RouterOutlet } from '@angular/router';
       }
 
     </div>    
+
+    <!-- @switch -->
+    <div class="centred-page sm">
+      @switch (currentStep()) {
+        @case ('step1') {
+          <h1>Step 1</h1>
+          <button class="btn" (click)="currentStep.set('step2')">Next</button>
+        }
+        @case ('step2') {
+          <h1>Step 2</h1>
+          <button class="btn" (click)="currentStep.set('final')">Next</button>
+        }
+        @case ('final') {
+          <h1>Final step</h1>
+        }
+        @default {
+          <h1>Welcome</h1>
+          <button class="btn" (click)="currentStep.set('step1')">Next</button>
+        }
+      }
+    </div>
+
   `,
   styles: [``],
 })
 export class AppComponent {
 
   logged = signal<boolean>(false);
+
+  currentStep = signal<'step1' | 'step2' | 'final' | null>(null);
 
   singIn() {
     this.logged.set(true);

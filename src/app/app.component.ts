@@ -9,21 +9,26 @@ import { RouterOutlet } from '@angular/router';
   imports: [CommonModule, RouterOutlet],
   template: `
     <div class="centred-page sm">
+      
       <h1 class="page-title">Counter Demo with Signal</h1>
       
       <button class="btn" (click)="dec()">-</button>
+      
       <span 
         class="text-2xl"
         [style.color]="isZeroColorOptimized()"
-      >{{ counter() }}</span>
+      >
+        {{ counter() }}
+      </span>
+      
       <button class="btn" (click)="inc()">+</button>
       <button class="btn" (click)="reset()" [style.display]="hideIfZero()">reset</button>
       
-      <!-- PROVA GITHUB 2 -->
-
       <div [hidden]="!isZero()">Counter is zero!</div>
+      
       <!--<div [hidden]="!isZero_old()">Counter is zero OLD!</div>-->
       <input class="input" type="text" (keydown)="doNothing_old()">
+
     </div>    
   `,
   styles: [``],
@@ -80,10 +85,7 @@ export class AppComponent {
     effect(() => localStorage.setItem('counter', JSON.stringify(this.counter())));
   }
 
-  isZero = computed(() => {
-    console.log('is zero');
-    return this.counter() === 0
-  })
+  isZero = computed(() => this.counter() === 0 );
 
   isZeroColor = computed(() => this.counter() === 0 ? 'red' : 'lightgreen');
 
@@ -106,6 +108,14 @@ export class AppComponent {
   }
 
   inc() {
+    /* 
+    * Questo modo porterebbe allo stesso risultato ma non è il metodo corretto 
+    * per modificare il valore di un signal basandosi sul suo valore precedente.
+    * 
+    * this.counter.set(this.counter() + 1) 
+    * 
+    * In questa situazione va utilizzato update()
+    */
     this.counter.update(counter => counter + 1);
   }
 

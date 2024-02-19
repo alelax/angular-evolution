@@ -2,50 +2,84 @@ import { AfterViewInit, Component, computed, effect, ElementRef, signal, ViewChi
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
-type Product = {
-  id: number,
-  name: string,
-  cost: number,
-  description: string
+interface Todo {
+  id: number;
+  title: string;
+  completed: boolean;
 }
-
-const initialState: Product[] = [
-  {id: 1, name: 'Chocolate', cost: 3, description: 'Bla bla bla...'},
-  {id: 2, name: 'Milk', cost: 1, description: 'ciao ciaoo...'},
-  {id: 3, name: 'Biscuits', cost: 2, description: 'so gooood....'}
-]
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, RouterOutlet],
   template: `
-    <!-- @for -->
-    <div class="centred-page sm">
-      @for(product of products(); track product.id) {
-        <button class="btn" (click)="selectProduct(product)">{{ product.name }}</button>
-      } 
+    <div class="centered-page sm flex flex-col gap-3">
+      <h1 class="page-title">Todo List</h1>
+          
+        <div>
+            {{ totalCompleted() }} completed | {{ todoToComplete() }} todos
+        </div>
+        <input 
+          type="text"
+          class="input input-bordered"
+          #inputRef
+          (keydown.enter)="addTodo(inputRef)"
+          placeholder="add todo"
+        >
 
-
-      @if (activeProduct()) {
-        <h1 class="text-2xl">Product Details</h1>
-        <div>€ {{ activeProduct()?.cost }}</div>
-        <div>{{ activeProduct()?.description }}</div>    
-      }
-      
+        <ul>
+          @for (todo of todos(); track todo.id) {
+            <li class="flex justify-between">
+              <div class="flex gap-3">
+                <input 
+                  type="checkbox" [checked]="todo.completed"
+                  (change)="toggleTodo(todo)"
+                >
+                <span [ngClass]="{'line-through': todo.completed}">
+                    {{todo.title}}
+                </span>
+              </div>
+              <button (click)="removeTodo(todo)">❌</button>
+            </li>
+          }
+          </ul>
+          
+          <pre>{{todos() | json}}</pre>
     </div>
   `,
   styles: [``],
 })
 export class AppComponent {
 
-  products = signal<Product[]>(initialState);
-  
-  activeProduct = signal<Product | null>(null);
+  todos = signal<Todo[]>([
+    { id: 1, title: 'Todo 1', completed: true },
+    { id: 2, title: 'Todo 2', completed: false },
+    { id: 3, title: 'Todo 3', completed: true },
+  ])
 
-  selectProduct(product: Product) {
-    this.activeProduct.set(product);
+  totalCompleted = computed(() => this.todos().filter(t => t.completed).length);
+  todoToComplete = computed(() => this.todos().filter(t => !t.completed).length);
+
+  addTodo(input: HTMLInputElement) {
+
+    const newTodo: Todo = {
+      id: Date.now(),
+      title: input.value,
+      completed: false
+    }
+
+    this.todos.update(todos => [...todos, newTodo]);
+    input.value = '';
   }
+
+  removeTodo(todoToRemove: Todo) {
+    this.todos.update(todos => todos.filter(t => t.id !== todoToRemove.id))
+  }
+
+  toggleTodo(todoToToggle: Todo) {
+    this.todos.update(todos => todos.map(t => t.id === todoToToggle.id ? {...t, completed: !t.completed} : t))
+  }
+
 
 }
 

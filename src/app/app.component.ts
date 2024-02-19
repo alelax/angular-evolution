@@ -2,6 +2,17 @@ import { AfterViewInit, Component, computed, effect, ElementRef, signal, ViewChi
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
+type Product = {
+  id: number,
+  name: string,
+  cost: number
+}
+
+const initialState: Product[] = [
+  {id: 1, name: 'Chocolate', cost: 3},
+  {id: 2, name: 'Milk', cost: 1},
+  {id: 3, name: 'Biscuits', cost: 2}
+]
 
 @Component({
   selector: 'app-root',
@@ -21,7 +32,7 @@ import { RouterOutlet } from '@angular/router';
 
     </div>    
 
-    <!-- @switch -->
+    <!-- @switch e  @empty -->
     <div class="centred-page sm">
       @switch (currentStep()) {
         @case ('step1') {
@@ -42,6 +53,16 @@ import { RouterOutlet } from '@angular/router';
       }
     </div>
 
+    <!-- @for -->
+    <div class="centred-page sm">
+      @for(product of products(); track product.id) {
+        <li>{{ product.name }}</li>
+      } @empty {
+        <button class="btn" (click)="loadProducts()">Load</button>
+      }
+    </div>
+
+
   `,
   styles: [``],
 })
@@ -51,12 +72,19 @@ export class AppComponent {
 
   currentStep = signal<'step1' | 'step2' | 'final' | null>(null);
 
+  products = signal<Product[]>([]);
+  
+
   singIn() {
     this.logged.set(true);
   }
 
   logOut() {
     this.logged.set(false);
+  }
+
+  loadProducts() {
+    this.products.set(initialState)
   }
 
 }

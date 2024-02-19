@@ -55,8 +55,8 @@ const initialState: Product[] = [
 
     <!-- @for -->
     <div class="centred-page sm">
-      @for(product of products(); track product.id) {
-        <li>{{ product.name }}</li>
+      @for(product of products(); track product.id; let i = $index; let l = $last; let f = $first; let odd = $odd; let even = $even) {
+        <li>{{ i + 1 }} - {{ product.name }}</li>
       } @empty {
         <button class="btn" (click)="loadProducts()">Load</button>
       }

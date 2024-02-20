@@ -33,5 +33,13 @@ export class PhoneComponent {
     nei rispettivi valori.
   */
   @Input({ transform: booleanAttribute }) showTitle = false;
-  @Input({ transform: numberAttribute }) size: number = 50
+  @Input({ transform: (val: 'sm' | 'md' | 'xl') => {
+    switch (val) {
+      case 'sm': return 50;
+      case 'md': return 75;
+      default:
+      case 'xl': return 100;
+    }
+  }}) 
+  size: number = 50
 }

@@ -12,6 +12,8 @@ import { PhoneComponent } from './shared/components/phone.component';
       <app-phone
         [url]="'assets/images/vertical-landscape.webp'"
         [alt]="'landscape'"
+        size="100"
+        showTitle="true"
        />
     </div>
   `,

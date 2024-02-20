@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, booleanAttribute, numberAttribute } from '@angular/core';
 
 @Component({
   selector: 'app-phone',
@@ -9,7 +9,14 @@ import { Component, Input } from '@angular/core';
       <div class="camera"></div> 
       <div class="display">
         <div class="artboard artboard-demo phone-1">
-          <img [src]="url" [alt]="alt" class="w-full">
+          <img 
+            [style.width.%]="size"
+            [src]="url" 
+            [alt]="alt" 
+          >
+          @if (showTitle) {
+            <div>{{ alt }}</div>
+          }
         </div>
       </div>
     </div>
@@ -18,7 +25,13 @@ import { Component, Input } from '@angular/core';
 })
 export class PhoneComponent {
   @Input({ required: true }) url: string = '';
-  @Input({ transform: (val: string) => {
-    return val.toUpperCase();
-  }}) alt: string = '';
+  @Input({ transform: (val: string) => val.toUpperCase()}) alt: string = '';
+
+  /* 
+    booleanAttribute e numberAttribute permettono di passare al compoenente le
+    proprietà senza utilizzare le parentesi quadre, e trasformano le stringhe
+    nei rispettivi valori.
+  */
+  @Input({ transform: booleanAttribute }) showTitle = false;
+  @Input({ transform: numberAttribute }) size: number = 50
 }

@@ -24,7 +24,7 @@ import { Component, Input, booleanAttribute, numberAttribute } from '@angular/co
   styles: ``
 })
 export class PhoneComponent {
-  @Input({ required: true }) url: string = '';
+  @Input({ alias: 'src', required: true }) url: string = '';
   @Input({ transform: (val: string) => val.toUpperCase()}) alt: string = '';
 
   /* 

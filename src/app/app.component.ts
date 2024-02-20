@@ -10,7 +10,7 @@ import { PhoneComponent } from './shared/components/phone.component';
   template: `
     <div class="centered-page sm flex flex-col gap-3">
       <app-phone
-        [url]="'assets/images/vertical-landscape.webp'"
+        [src]="'assets/images/vertical-landscape.webp'"
         [alt]="'landscape'"
         size="xl"
         showTitle="true"

@@ -1,34 +1,31 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { User } from '../../models/User';
 import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-user-profile',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [JsonPipe],
   template: `
-    <p>CURRENT ID: {{ currentId }}</p>
+    <pre>{{ items | json }}</pre>
 
-    <<pre>{{ user | json }}</pre>>
+    {{ render() }}
   `,
   styles: ``
 })
 export class UserProfileComponent {
   
-  currentId: number | undefined;
+  @Input() items: any = [];
 
   @Input() set id(val: number | undefined) {
     console.log('val: ', val);
-    this.currentId = val
-    this.http.get<User>(`https://jsonplaceholder.typicode.com/users/${val}`)
-    .subscribe( res => {
-      this.user = res
-    })
-
   };
-  user: User | undefined
-  http = inject(HttpClient)
+  
+  render() {
+    console.log('render user-profile component');    
+  }
 
   
 }

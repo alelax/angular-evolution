@@ -10,7 +10,9 @@ import { UserProfileComponent } from './shared/components/user-profile.component
   imports: [CommonModule, RouterOutlet, PhoneComponent, UserProfileComponent],
   template: `
     <div class="centered-page sm flex flex-col gap-3">
-      <app-user-profile [id]="currentId"/>
+      <app-user-profile 
+        [items]="list"
+      />
 
       <button 
         class="btn"
@@ -22,12 +24,11 @@ import { UserProfileComponent } from './shared/components/user-profile.component
 })
 export class AppComponent {
 
-  currentId: number = 1;
+  list: any = [1, 2, 3]
 
 
   inc() {
-    if (this.currentId < 10) this.currentId++;
-    else this.currentId = 1;
+    this.list = [...this.list, 4]
   }
   
 

@@ -8,23 +8,27 @@ import { JsonPipe } from '@angular/common';
   standalone: true,
   imports: [JsonPipe],
   template: `
-    <pre>{{ user | json }}</pre>
+    <p>CURRENT ID: {{ currentId }}</p>
+
+    <<pre>{{ user | json }}</pre>>
   `,
   styles: ``
 })
-export class UserProfileComponent implements OnChanges {
-  @Input() id: number | undefined;
+export class UserProfileComponent {
+  
+  currentId: number | undefined;
+
+  @Input() set id(val: number | undefined) {
+    console.log('val: ', val);
+    this.currentId = val
+    this.http.get<User>(`https://jsonplaceholder.typicode.com/users/${val}`)
+    .subscribe( res => {
+      this.user = res
+    })
+
+  };
   user: User | undefined
   http = inject(HttpClient)
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['id'].firstChange) {
-      // ...
-    }
-    
-    this.http.get<User>(`https://jsonplaceholder.typicode.com/users/${changes['id'].currentValue}`)
-      .subscribe(res => {
-        this.user = res;
-      })
-  }
+  
 }

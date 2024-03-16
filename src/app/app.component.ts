@@ -6,63 +6,26 @@ import { UserProfileComponent } from './shared/components/user-profile.component
 import { TimelineComponent } from './shared/components/timeline.component';
 import { AccordionComponent } from './shared/components/accordion.component';
 import { AlertComponent } from './shared/components/alert.component';
+import { DropdownComponent } from './shared/components/dropdown.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, AlertComponent],
+  imports: [CommonModule, RouterOutlet, DropdownComponent],
   template: `
     <div class="centered-page sm flex flex-col gap-3">
-      <app-alert 
-        denyLabel="cancel"
-        acceptLabel="confirm"
-        variant="error"
-        (onCancel)="delete()" 
-        (onConfirm)="approve()"
-      >
-        <p>this is a message</p>
-      </app-alert>
-      
-      <app-alert
-        (onCancel)="deny()" 
-        (onConfirm)="accept()"
-      >
-        <div class="flex flex-col gap-5">
-          <em>bla bla</em>
-          <strong>bla bla</strong>
-          <input type="text" class="input input-bordered">
-        </div>
-      </app-alert>
-
-      <app-alert
-        (onCancel)="deny()" 
-        (onConfirm)="accept()"
-        variant="success"
-      >
-        Completato
-      </app-alert>
-      
-
+      <app-dropdown [items]="list">Click</app-dropdown>
     </div>
   `,
   styles: [``],
 })
 export class AppComponent {  
 
-  
-
-  delete() {
-    console.log('delete')
-  }
-  approve() {
-    console.log('approve')
-  }
-  deny() {
-    console.log('deny')
-  }
-  accept() {
-    console.log('accept')
-  }
+  list = [
+    { label: 'item 1', value: 1},
+    { label: 'item 2', value: 2},
+    { label: 'item 3', value: 'something'},
+  ]
 
 }
 

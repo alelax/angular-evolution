@@ -21,6 +21,22 @@ import { AccordionComponent } from './shared/components/accordion.component';
       <app-accordion title="lorem impsum 3">
         <button class="btn btn-primary" (click)="doSomething()">CLICK</button>
       </app-accordion>
+
+      <br>
+      <br>
+      <br>
+
+      <app-accordion title="lorem impsum 1" groupName="acc">
+        <p>Lorem 1</p>
+      </app-accordion>
+      <app-accordion title="lorem impsum 2" groupName="acc" selected>
+        <p><em>Hello</em></p>
+      </app-accordion>
+      <app-accordion title="lorem impsum 3" groupName="acc">
+        <button class="btn btn-primary" (click)="doSomething()">CLICK</button>
+      </app-accordion>
+
+
     </div>
   `,
   styles: [``],

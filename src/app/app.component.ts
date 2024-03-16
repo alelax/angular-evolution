@@ -5,37 +5,43 @@ import { PhoneComponent } from './shared/components/phone.component';
 import { UserProfileComponent } from './shared/components/user-profile.component';
 import { TimelineComponent } from './shared/components/timeline.component';
 import { AccordionComponent } from './shared/components/accordion.component';
+import { AlertComponent } from './shared/components/alert.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, AccordionComponent],
+  imports: [CommonModule, RouterOutlet, AlertComponent],
   template: `
     <div class="centered-page sm flex flex-col gap-3">
-      <app-accordion title="lorem impsum 1">
-        <p>Lorem 1</p>
-      </app-accordion>
-      <app-accordion title="lorem impsum 2" selected>
-        <p><em>Hello</em></p>
-      </app-accordion>
-      <app-accordion title="lorem impsum 3">
-        <button class="btn btn-primary" (click)="doSomething()">CLICK</button>
-      </app-accordion>
+      <app-alert 
+        denyLabel="cancel"
+        acceptLabel="confirm"
+        variant="error"
+        (onCancel)="delete()" 
+        (onConfirm)="approve()"
+      >
+        <p>this is a message</p>
+      </app-alert>
+      
+      <app-alert
+        (onCancel)="deny()" 
+        (onConfirm)="accept()"
+      >
+        <div class="flex flex-col gap-5">
+          <em>bla bla</em>
+          <strong>bla bla</strong>
+          <input type="text" class="input input-bordered">
+        </div>
+      </app-alert>
 
-      <br>
-      <br>
-      <br>
-
-      <app-accordion title="lorem impsum 1" groupName="acc">
-        <p>Lorem 1</p>
-      </app-accordion>
-      <app-accordion title="lorem impsum 2" groupName="acc" selected>
-        <p><em>Hello</em></p>
-      </app-accordion>
-      <app-accordion title="lorem impsum 3" groupName="acc">
-        <button class="btn btn-primary" (click)="doSomething()">CLICK</button>
-      </app-accordion>
-
+      <app-alert
+        (onCancel)="deny()" 
+        (onConfirm)="accept()"
+        variant="success"
+      >
+        Completato
+      </app-alert>
+      
 
     </div>
   `,
@@ -43,8 +49,21 @@ import { AccordionComponent } from './shared/components/accordion.component';
 })
 export class AppComponent {  
 
+  
 
-  doSomething() {}
+  delete() {
+    console.log('delete')
+  }
+  approve() {
+    console.log('approve')
+  }
+  deny() {
+    console.log('deny')
+  }
+  accept() {
+    console.log('accept')
+  }
+
 }
 
 

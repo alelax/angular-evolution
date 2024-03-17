@@ -6,7 +6,7 @@ import { UserProfileComponent } from './shared/components/user-profile.component
 import { TimelineComponent } from './shared/components/timeline.component';
 import { AccordionComponent } from './shared/components/accordion.component';
 import { AlertComponent } from './shared/components/alert.component';
-import { DropdownComponent } from './shared/components/dropdown.component';
+import { DropdownComponent, DropDownItem } from './shared/components/dropdown.component';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +20,7 @@ import { DropdownComponent } from './shared/components/dropdown.component';
       <br>
       <br>
       <br>
-      <app-dropdown [items]="list">BOTTOM</app-dropdown>
+      <app-dropdown [items]="list" (select)="doSomething($event)">BOTTOM</app-dropdown>
       <app-dropdown [items]="list" placement="right">RIGHT</app-dropdown>
       <app-dropdown [items]="list" placement="top">TOP</app-dropdown>
       <app-dropdown [items]="list" placement="left">LEFT</app-dropdown>
@@ -37,6 +37,10 @@ export class AppComponent {
     { label: 'item 2', value: 2},
     { label: 'item 3', value: 'something'},
   ]
+
+  doSomething(event: DropDownItem) {
+    console.log(event);
+  }
 
 }
 

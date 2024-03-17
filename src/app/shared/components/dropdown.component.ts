@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { Component, Input, booleanAttribute } from '@angular/core';
 
 export type DropDownItem = {
   label: string;
@@ -8,9 +9,17 @@ export type DropDownItem = {
 @Component({
   selector: 'app-dropdown',
   standalone: true,
-  imports: [],
+  imports: [NgClass],
   template: `
-    <div class="dropdown">
+    <div 
+      class="dropdown"
+      [ngClass]="{
+        'dropdown-top dropdown-end': placement === 'top',
+        'dropdown-left': placement === 'left',
+        'dropdown-right': placement === 'right',
+        'dropdown-hover': hover
+      }"
+    >
       <div tabindex="0" role="button" class="btn m-1">
           <ng-content></ng-content>
       </div>
@@ -26,4 +35,7 @@ export type DropDownItem = {
 export class DropdownComponent {
 
   @Input() items: DropDownItem[] = []
+  @Input() placement: 'left' | 'right' | 'bottom' | 'top' = 'bottom';
+  @Input({ transform: booleanAttribute }) hover = false;
+
 }

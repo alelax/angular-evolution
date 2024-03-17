@@ -13,9 +13,20 @@ import { DropdownComponent } from './shared/components/dropdown.component';
   standalone: true,
   imports: [CommonModule, RouterOutlet, DropdownComponent],
   template: `
-    <div class="centered-page sm flex flex-col gap-3">
-      <app-dropdown [items]="list">Click</app-dropdown>
-    </div>
+    <!-- <div class="centered-page sm flex gap-3"> -->
+      
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <app-dropdown [items]="list">BOTTOM</app-dropdown>
+      <app-dropdown [items]="list" placement="right">RIGHT</app-dropdown>
+      <app-dropdown [items]="list" placement="top">TOP</app-dropdown>
+      <app-dropdown [items]="list" placement="left">LEFT</app-dropdown>
+      <app-dropdown [items]="list" placement="left" hover>HOVER</app-dropdown>
+
+    <!-- </div> -->
   `,
   styles: [``],
 })

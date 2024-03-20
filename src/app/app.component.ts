@@ -1,46 +1,29 @@
-import { AfterViewInit, Component, computed, effect, ElementRef, inject, signal, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { PhoneComponent } from './shared/components/phone.component';
-import { UserProfileComponent } from './shared/components/user-profile.component';
-import { TimelineComponent } from './shared/components/timeline.component';
-import { AccordionComponent } from './shared/components/accordion.component';
-import { AlertComponent } from './shared/components/alert.component';
-import { DropdownComponent, DropDownItem } from './shared/components/dropdown.component';
+import { NavbarComponent } from './core/components/navbar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, DropdownComponent],
+  imports: [CommonModule, RouterOutlet, NavbarComponent ],
   template: `
-    <!-- <div class="centered-page sm flex gap-3"> -->
+    <div class="centered-page sm flex gap-3">
       
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <app-dropdown [items]="list" (select)="doSomething($event)">BOTTOM</app-dropdown>
-      <app-dropdown [items]="list" placement="right">RIGHT</app-dropdown>
-      <app-dropdown [items]="list" placement="top">TOP</app-dropdown>
-      <app-dropdown [items]="list" placement="left">LEFT</app-dropdown>
-      <app-dropdown [items]="list" placement="left" hover>HOVER</app-dropdown>
+      <app-navbar></app-navbar>
+      
+      <hr>
 
-    <!-- </div> -->
+      <div class="max-w-screen-lg mx-3 lg:mx-auto">
+        <router-outlet />
+      </div>
+    
+
+    </div>
   `,
   styles: [``],
 })
 export class AppComponent {  
-
-  list = [
-    { label: 'item 1', value: 1},
-    { label: 'item 2', value: 2},
-    { label: 'item 3', value: 'something'},
-  ]
-
-  doSomething(event: DropDownItem) {
-    console.log(event);
-  }
 
 }
 

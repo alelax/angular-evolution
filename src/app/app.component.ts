@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { NavbarComponent } from './core/components/navbar.component';
 
 @Component({
@@ -8,7 +8,7 @@ import { NavbarComponent } from './core/components/navbar.component';
   standalone: true,
   imports: [CommonModule, RouterOutlet, NavbarComponent ],
   template: `
-    <div class="centered-page sm flex gap-3">
+    
       
       <app-navbar></app-navbar>
       
@@ -19,12 +19,22 @@ import { NavbarComponent } from './core/components/navbar.component';
       </div>
     
 
-    </div>
+    
   `,
   styles: [``],
 })
 export class AppComponent {  
 
+  router = inject(Router);
+
+  constructor() {
+    
+    this.router.events.subscribe( event => {
+      if (event instanceof NavigationEnd) {
+        console.log(event.url);
+      }
+    })
+  }
 }
 
 

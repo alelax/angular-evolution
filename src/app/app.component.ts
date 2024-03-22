@@ -27,10 +27,6 @@ export class AppComponent {
 
   router = inject(Router);
 
-  activateRoute = inject(ActivatedRoute);
-
-  title: string = '';
-
   constructor() {
     
     this.router.events.subscribe( event => {
@@ -38,17 +34,6 @@ export class AppComponent {
         console.log(event.url);
       }
     })
-
-
-    // prende il valore solo al caricamento del componente
-    this.title = this.activateRoute.snapshot.data['title']
-
-    // ascolta i cambiamenti della proprietà title passate nella route
-    this.activateRoute.data.subscribe( res => {
-      console.log('page title: ', res['title']);
-      
-    })
-
 
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-demo1',
@@ -6,11 +6,13 @@ import { Component } from '@angular/core';
   imports: [],
   template: `
     <p>
-      demo1 works!
+      demo1 works! {{ title }}
     </p>
   `,
   styles: ``
 })
 export class Demo1Component {
+
+  @Input() title: string = '';
 
 }

@@ -9,6 +9,7 @@ export const routes: Routes = [
 
     // Posso rimuovere il then se il componente nella sua classe è esportato as default
     { path: 'demo3', loadComponent: () => import('./features/demo3/demo3.component') },
-    { path: '', redirectTo: 'demo1', pathMatch: 'full' }
+    { path: 'product/:productId', loadComponent: () => import('./features/product/product.component') },
+    { path: '', redirectTo: 'demo1', pathMatch: 'full'}
 ];
 

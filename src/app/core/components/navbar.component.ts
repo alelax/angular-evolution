@@ -15,6 +15,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
           <li routerLink="demo1" routerLinkActive="text-sky-400"><a>Demo 1</a></li>
           <li routerLink="demo2" routerLinkActive="text-sky-400"><a>Demo 2</a></li>
           <li routerLink="demo3" routerLinkActive="text-sky-400"><a>Demo 3</a></li>
+          <li routerLink="product" routerLinkActive="text-sky-400"><a>Product</a></li>
         </ul>
       </div>
     </div>

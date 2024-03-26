@@ -1,15 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { User } from '../../models/user';
+import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-demo2',
   standalone: true,
-  imports: [],
+  imports: [AsyncPipe],
   template: `
     
 
-    @for (user of users; track user.id) {
+    @for (user of users$ | async; track user.id) {
       <p>
         {{ user.name }}
       </p>
@@ -18,15 +20,6 @@ import { User } from '../../models/user';
   styles: ``
 })
 export class Demo2Component {
-  http = inject(HttpClient);
-  users: User[] = [];
-
-  constructor() {
-    this.http.get<User[]>('https://jsonplaceholder.typicode.com/users')
-      .subscribe(res => {
-        console.log('users: ', res);
-        this.users = res;        
-      })
-  }
-
+  users$ = inject(HttpClient).get<User[]>('https://jsonplaceholder.typicode.com/users');
+  
 }

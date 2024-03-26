@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { User } from '../../models/User';
+import { User } from '../../models/user';
 import { JsonPipe } from '@angular/common';
 
 @Component({

@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { User } from '../../models/user';
-import { Observable } from 'rxjs';
+import { Observable, delay } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
@@ -11,24 +12,27 @@ import { AsyncPipe } from '@angular/common';
   template: `
     
 
-    @for (user of users(); track user.id) {
+    @for (name of names(); track $index) {
       <p>
-        {{ user.name }}
+        {{ name }}
       </p>
     }
   `,
   styles: ``
 })
 export class Demo2Component {
-  http = inject(HttpClient);
-  users = signal<User[]>([]);
+  
+  users = toSignal(
+    inject(HttpClient).get<User[]>('https://jsonplaceholder.typicode.com/users')
+      .pipe(
+        delay(2000)
+      )
+  )
+  
+  names = computed(() => this.users()?.map( user => user.name))
 
-  constructor() {
-    this.http.get<User[]>('https://jsonplaceholder.typicode.com/users')
-      .subscribe( res => {
-        this.users.set(res)
-      })
-  }
+
+  
   
   
 }

@@ -11,9 +11,16 @@ import { HttpClient } from '@angular/common/http';
     <div class="centered-page sm flex flex-col gap-3">
       <h1 class="page-title">Todo List</h1>
           
+        @if (error()) {
+          <div class="bg-red-400 rounded-xl p-3 text-black">
+            errore!
+          </div>    
+        }
+
         <div>
             {{ totalCompleted() }} completed | {{ todoToComplete() }} todos
         </div>
+
         <input 
           type="text"
           class="input input-bordered"
@@ -49,45 +56,68 @@ export class Demo1Component implements OnInit {
 
   todos = signal<Todo[]>([]);
   http = inject(HttpClient);
+  error = signal(false);
 
   totalCompleted = computed(() => this.todos().filter(t => t.completed).length);
   todoToComplete = computed(() => this.todos().filter(t => !t.completed).length);
 
   ngOnInit(): void {
-    this.http.get<Todo[]>('http://localhost:3000/todos').subscribe( res => {
-      this.todos.set(res)
-    })
+    this.http.get<Todo[]>('http://localhost:3000/todos').subscribe({
+         next: res => {
+           this.todos.set(res)
+         },
+         error: () => {
+           this.error.set(true)
+         }
+       })
   }
 
   addTodo(input: HTMLInputElement) {
-
+    this.error.set(false)
     this.http.post<Todo>(`http://localhost:3000/todos`, {
       title: input.value,
       completed: false
     })
-    .subscribe(newTodo => {
-      this.todos.update(todos => [...todos, newTodo])
-      input.value = ''
+    .subscribe({
+      next: newTodo => {
+        this.todos.update(todos => [...todos, newTodo])
+        input.value = ''
+      },
+      error: () => {
+        this.error.set(true)
+      }
     })
 
   }
 
   removeTodo(todoToRemove: Todo) {
+    this.error.set(false)
     this.http.delete(`http://localhost:3000/todos/${todoToRemove.id}`)
-      .subscribe(() => {
-        this.todos.update(todos => todos.filter(todo => todo.id !== todoToRemove.id))
+      .subscribe({
+        next: () => {
+          this.todos.update(todos => todos.filter(todo => todo.id !== todoToRemove.id))
+        },
+        error: () => {
+          this.error.set(true)
+        }
       })
   }
 
   toggleTodo(todoToToggle: Todo) {
+    this.error.set(false)
     this.http.patch<Todo>(`http://localhost:3000/todos/${todoToToggle.id}`, {
       ...todoToToggle,
       completed: !todoToToggle.completed
     })
-    .subscribe(res => {
-      this.todos.update(todos => {
-        return todos.map(t => t.id === todoToToggle.id ? res : t);
-      })
+    .subscribe({
+      next: res => {
+        this.todos.update(todos => {
+          return todos.map(t => t.id === todoToToggle.id ? res : t);
+        })
+      },
+      error: () => {
+        this.error.set(true)
+      }
     })
   }
 

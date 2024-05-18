@@ -19,8 +19,8 @@ export class CartService {
     if (!idInCart) this.items.update(items => [...items, itemToAdd]);
   }
 
-  removeFromCart(id: number) {
-    this.items.update(items => items.filter(i => i.id !== id))
+  removeFromCart(itemToRemove: Product) {
+    this.items.update(items => items.filter(i => i.id !== itemToRemove.id))
   }
 
 

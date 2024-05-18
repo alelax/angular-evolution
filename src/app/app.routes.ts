@@ -1,6 +1,9 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
+    { path: 'home', loadComponent: () => import('./features/home/home.component') },
+    { path: 'cart', loadComponent: () => import('./features/cart/cart.component') },
+    { path: 'settings', loadComponent: () => import('./features/settings/settings.component') },
     { 
         path: 'demo1', loadComponent: () => import('./features/demo1/demo1.component').then( file => file.Demo1Component ),
         data: { title: 'Hello page' }
@@ -23,6 +26,6 @@ export const routes: Routes = [
             { path: '', redirectTo: 'accordion', pathMatch: 'full'}
         ]
     },
-    { path: '', redirectTo: 'demo1', pathMatch: 'full'}
+    { path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
 

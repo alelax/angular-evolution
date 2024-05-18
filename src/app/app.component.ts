@@ -14,7 +14,7 @@ import { NavbarComponent } from './core/components/navbar.component';
       
       <hr>
 
-      <div class="max-w-screen-lg mx-3 lg:mx-auto">
+      <div class="max-w-screen-md mx-auto">
         <router-outlet />
       </div>
     

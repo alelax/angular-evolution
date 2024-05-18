@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { CartService } from '../../core/cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -6,11 +7,11 @@ import { Component } from '@angular/core';
   imports: [],
   template: `
     <p>
-      cart works!
+      cart works! {{ cartService.cartIsEmpty() }}
     </p>
   `,
   styles: ``
 })
 export default class CartComponent {
-
+  cartService = inject(CartService);
 }

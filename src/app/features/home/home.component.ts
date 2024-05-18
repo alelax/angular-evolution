@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Product } from '../../models/product';
 import { JsonPipe } from '@angular/common';
+import { CartService } from '../../core/cart.service';
 
 @Component({
   selector: 'app-home',
@@ -12,15 +13,18 @@ import { JsonPipe } from '@angular/common';
     <div class="flex gap-6 justify-center">
       @for (product of products(); track product.id) {
         <div class="card w-full bg-base-100 shadow-xl mt-2">
-            <figure><img [src]="product.image" [alt]="product.name" /></figure>
+          <figure><img [src]="product.image" [alt]="product.name" /></figure>
             <div class="card-body">
-              <div class="">
+              <div class="flex justify-between">
                 <h2 class="card-title">{{product.name}}</h2>
                 <div class="card-title">€ {{product.cost}}</div>
               </div>
               <p>{{product.description}}</p>
               <div class="card-actions justify-end">
-                <button class="btn btn-primary">
+                <button 
+                  class="btn btn-primary" 
+                  (click)="cartService.addToCart(product)"
+                >
                   Add to Cart
                 </button>
               </div>
@@ -29,14 +33,15 @@ import { JsonPipe } from '@angular/common';
       }
     </div>
     
-    <pre>{{products() | json}}</pre>
+    <pre>{{ cartService.items() | json }}</pre>
   `,
   styles: ``
 })
 export default class HomeComponent {
 
   products = signal<Product[]>(initialState);
-  
+  cartService = inject(CartService);
+
 }
 
 

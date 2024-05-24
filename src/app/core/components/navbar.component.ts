@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CartService } from '../cart.service';
+import { SettingsService } from '../settings.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,7 +10,11 @@ import { CartService } from '../cart.service';
   template: `
     <div class="navbar bg-base-100">
           <div class="flex-1">
-              <a class="btn btn-ghost text-xl" routerLink="home">Shop DI</a>
+            <a 
+                class="btn btn-ghost text-xl" 
+                routerLink="home"
+                [style.color]="settingsService.config().color"
+            >{{ settingsService.config().title }}</a>
           </div>
           <div class="flex-none">
               <div class="dropdown dropdown-end">
@@ -42,7 +47,7 @@ import { CartService } from '../cart.service';
                               <span class="badge">New</span>
                           </a>
                       </li>
-                      <li><a>Settings</a></li>
+                      <li routerLink="settings"><a>Settings</a></li>
                       <li><a>Logout</a></li>
                   </ul>
               </div>
@@ -53,5 +58,6 @@ import { CartService } from '../cart.service';
 })
 export class NavbarComponent {
 
-  cartService = inject(CartService)
+  cartService = inject(CartService);
+  settingsService = inject(SettingsService);
 }

@@ -20,6 +20,11 @@ export class SettingsService {
   color = computed(() => this.config().color);
   isShopEnabled = computed(() => this.config().enableShop);
 
+
+  setConfig(propName: string, value: string) {
+    this.config.update(cfg => ({...cfg, [propName]: value}));
+  }
+
   setTitle(title: string) {
     this.config.update(conf => ({ ...conf, title }));
   }

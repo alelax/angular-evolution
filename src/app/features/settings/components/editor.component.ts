@@ -15,7 +15,7 @@ import { JsonPipe } from '@angular/common';
         type="text"
         class="input input-bordered"
         #title
-        (input)="settingsService.setTitle(title.value)"
+        (input)="settingsService.setConfig('title', title.value)"
         [value]="settingsService.title()"
       >
 
@@ -31,7 +31,7 @@ import { JsonPipe } from '@angular/common';
         type="color"
         class="input input-bordered"
         #color
-        (input)="settingsService.setColor(color.value)"
+        (input)="settingsService.setConfig('color', color.value)"
         [value]="settingsService.color()"
       >
     </div>
